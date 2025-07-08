@@ -1,0 +1,9 @@
+@"
+*.class
+*.log
+bin/
+out/
+.idea/
+*.iml
+target/
+"@ > .gitignore
