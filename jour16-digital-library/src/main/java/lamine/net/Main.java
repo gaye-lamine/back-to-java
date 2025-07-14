@@ -3,9 +3,12 @@ package lamine.net;
 import lamine.net.Utils.Utils;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 public class Main {
+    private static final  Logger LOGGER = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
+
         // Créer 5 auteurs
         Author author1 = new Author();
         author1.setFirstname("Lamine");
@@ -49,6 +52,31 @@ public class Main {
         Utils utils = new Utils();
         utils.ListToJson(books);
 
+        // liste des livres de categories programming
+        System.out.println("Livres de categories programming:");
+        Book bookfilter = new Book();
+        Author author = new Author();
+        List<Book> programmingBooks;
+        programmingBooks = bookfilter.filterByCategory("Programming", books);
+        utils.ListToJson(programmingBooks);
+       System.out.println("=======================================");
+
+       System.out.println("Livres décroissants de prix:");
+       List<Book> sortedBooks = bookfilter.sorterByCroissantPrice(books);
+       utils.ListToJson(sortedBooks);
+       System.out.println("=======================================");
+
+       System.out.println("Tous les livres:");
+       utils.ListToJson(books);
+
+       System.out.println("Titre des livres:");
+       List<String> titles = bookfilter.getAllTitles(books);
+       titles.forEach(System.out::println);
+       System.out.println("=======================================");
+       System.out.println("Livre le moins cher:");
+       Book cheaperbook = bookfilter.cheaperbook(books);
+       System.out.println(cheaperbook.getTitle());
+
         // Créer 2 utilisateurs
         User user1 = new User(UUID.randomUUID().toString(), "Alpha Diallo");
         User user2 = new User(UUID.randomUUID().toString(), "Sophie Ndiaye");
@@ -64,12 +92,40 @@ public class Main {
 
         System.out.println("\nLivres empruntés par " + user1.getName() + ":");
         for (Book b : user1.getBorrowedBooks()) {
-            System.out.println(b.getTitle());
+            Logger.getLogger(Main.class.getName()).info(b.getTitle());
         }
 
         System.out.println("\nLivres empruntés par " + user2.getName() + ":");
         for (Book b : user2.getBorrowedBooks()) {
             System.out.println(b.getTitle());
         }
+
+        Author author6 = new Author();
+        author6.setFirstname("Ousmane");
+        author6.setLastname("Ndoye");
+
+
+        LOGGER.info("L'author1 existe dans la liste des livres");
+        boolean existsBookByAuthor = bookfilter.existsBookByAuthor(books, author6);
+        if (existsBookByAuthor){
+            Logger.getLogger(Main.class.getName()).info("L'author1 existe dans la liste des livres");
+        }
+        else{
+            Logger.getLogger(Main.class.getName()).info("Non author1 n'existe pas dans la liste des livres");
+        }
+
+        System.out.println("Groupe by category");
+        Map<String, List<Book>> groupByCategory = bookfilter.groupByCategory(books);
+        groupByCategory.forEach((k,v) -> System.out.println(k + " : " + v));
+        System.out.println("=======================================");
+
+        System.out.println("Total price of all books: " + bookfilter.getTotalePrice(books) + " $");
+        System.out.println("=======================================");
+
+        System.out.println("unique authors: ");
+        author.uniqueAuthors();
+
+
+
     }
 }

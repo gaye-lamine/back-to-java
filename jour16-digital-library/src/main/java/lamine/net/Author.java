@@ -1,5 +1,6 @@
 package lamine.net;
 
+import java.util.List;
 import java.util.UUID;
 
 public class Author {
@@ -29,4 +30,10 @@ public class Author {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
+    public List<Author> uniqueAuthors(){
+        List<Author> authors = List.of(this);
+        return authors.stream().distinct().toList();
+    }
 }
+

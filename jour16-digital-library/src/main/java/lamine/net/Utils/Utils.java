@@ -11,4 +11,14 @@ public class Utils {
         String json = gson.toJson(books);
         System.out.println(json);
     }
+
+    public void BookToJson(Book book){
+        Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(book);
+        System.out.println(json);
+    }
+    public void MapsToJson(List<String> maps){
+        Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(maps);
+    }
 }
